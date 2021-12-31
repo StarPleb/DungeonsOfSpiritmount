@@ -1,0 +1,11 @@
+{
+  "expo": {
+    "name": "DungeonsOfSpiritmount",
+    "slug": "DungeonsOfSpiritmount",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  },
+  "name": "DungeonsOfSpiritmount"
+}
