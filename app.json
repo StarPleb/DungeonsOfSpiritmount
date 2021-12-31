@@ -5,7 +5,8 @@
     "version": "1.0.0",
     "assetBundlePatterns": [
       "**/*"
-    ]
+    ],
+    "description": "Simple rogue-like project.  Not using react native game engine this time, as I ran into problems playing sprite animations on entities using rn-sprite-sheet.  Implementing the game loop and making the game re-render as little as possible will surely teach me a lot, though. "
   },
   "name": "DungeonsOfSpiritmount"
 }
