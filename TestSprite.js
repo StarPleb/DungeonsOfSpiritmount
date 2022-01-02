@@ -1,6 +1,6 @@
 import SpriteSheet from 'rn-sprite-sheet';
-import React, {PureComponent, Component} from "react";
-import {useState, useEffect} from 'react-native'
+import React, {PureComponent, Component, useState, useEffect} from "react";
+import {} from 'react-native'
 
 
 class TestSprite extends Component {
@@ -19,7 +19,7 @@ class TestSprite extends Component {
         this.playAnimation({
             type: "idle", // (required) name of the animation (name is specified as a key in the animation prop)
             fps: 24, // frames per second
-            loop: true, // if true, replays animation after it finishes
+            loop: false, // if true, replays animation after it finishes
             resetAfterFinish: false, // if true, the animation will reset back to the first frame when finished; else will remain on the last frame when finished
           })
 
@@ -40,12 +40,22 @@ class TestSprite extends Component {
     walkAnimation = () =>{
         this.playAnimation({
             type: "walk", // (required) name of the animation (name is specified as a key in the animation prop)
-            fps: 12, // frames per second
-            loop: true, // if true, replays animation after it finishes
+            fps: 24, // frames per second
+            loop: false, // if true, replays animation after it finishes
             resetAfterFinish: false, // if true, the animation will reset back to the first frame when finished; else will remain on the last frame when finished
           })
         
     }
+
+    changeColors = () =>{
+      this.playAnimation({
+          type: "changeColors", // (required) name of the animation (name is specified as a key in the animation prop)
+          fps: 12, // frames per second
+          loop: false, // if true, replays animation after it finishes
+          resetAfterFinish: false, // if true, the animation will reset back to the first frame when finished; else will remain on the last frame when finished
+        })
+      
+  }
 
   
   render(){
@@ -71,6 +81,7 @@ class TestSprite extends Component {
           animations={{
             idle: [this.props.index],
             walk: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17],
+            changeColors: [541, 542, 543, 544, 543],
             appear: Array.from({ length: 15 }, (v, i) => i + 18),
             die: Array.from({ length: 21 }, (v, i) => i + 33),
           }}
@@ -81,5 +92,6 @@ class TestSprite extends Component {
   }
 
   }
+
 
   export {TestSprite}

@@ -17,7 +17,7 @@ export default function App() {
   
   return (
     <View style={styles.container}>
-      <DungeonsOfSpiritmount width = {window.width} height ={window.height} window ={window} layout={[]}/>
+      <DungeonsOfSpiritmount width = {window.width} height ={window.height/2} window ={window} layout={[]}/>
     </View>
   );
 }
