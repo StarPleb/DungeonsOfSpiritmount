@@ -3,7 +3,7 @@ import React, {PureComponent, Component, useState, useEffect} from "react";
 import {} from 'react-native'
 
 
-class TestSprite extends Component {
+class TestSprite extends PureComponent {
 
     constructer(props){
         this.sprite = null

@@ -1,7 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import SpriteSheet from 'rn-sprite-sheet';
 import React, { useState, useEffect, PureComponent } from 'react';
-import { StyleSheet, Text, View, Dimensions, Button } from 'react-native';
+import { StyleSheet, Text, View, Dimensions, Button, FlatList, List } from 'react-native';
 import { MoveCharacter } from './systems.js'
 import { TestSprite, MapSprite } from './TestSprite.js';
 import { Map } from 'immutable'
@@ -32,42 +32,42 @@ export default function DungeonsOfSpiritmount(props) {
         let newEntities = step(state)
 
         setState({ ...newEntities })
-        if(count > 20){
+        if (count > 20) {
             ref.changeColors()
             setCount(0)
         }
     }
 
 
-    function loadMap(){
+    function loadMap() {
 
-        let rows = Math.ceil(props.height/spriteSize)
-        let columns = Math.ceil(props.height/spriteSize)
+        let rows = Math.ceil(props.height / spriteSize)
+        let columns = Math.ceil(props.height / spriteSize)
         var tempmap = []
-        for(let i = 0; i <rows; i++){
-            for(let j = 0; j < columns; j++){
+        for (let i = 0; i < rows; i++) {
+            for (let j = 0; j < columns; j++) {
                 let mapIdx = (i * columns) + j;
-                tempmap.push({key: mapIdx, index: 1358, position: [j * spriteSize, i * spriteSize]})
+                tempmap.push({ key: mapIdx, index: 1358, position: [j * spriteSize, i * spriteSize] })
 
             }
         }
 
-        setMap(map=> tempmap)
+        setMap(map => tempmap)
         // nonstatemap = tempmap
 
-            
+
     }
     useEffect(() => {
         console.log("dungeon useEffect")
-        console.log(props.width/spriteSize)
-        console.log(props.height/spriteSize)
+        console.log(props.width / spriteSize)
+        console.log(props.height / spriteSize)
         let newEntities = step(state)
 
         let mapped = Map({ ...newEntities })
         console.log(mapped)
         setState({ ...newEntities });
 
-        return()=>{
+        return () => {
         }
 
 
@@ -89,8 +89,9 @@ export default function DungeonsOfSpiritmount(props) {
 
     return (
         <View style={styles.container}>
+
             <View style={{ width: props.width, height: props.height, backgroundColor: 'blue' }}>
-            <MapView map = {map}/>
+                <MapView map={map} width={props.width} height={props.height} />
                 {state.layout.map((layout, index) => {
 
                     //Testing various sprites on screen, when they have to be re-rendered, etc
@@ -99,7 +100,7 @@ export default function DungeonsOfSpiritmount(props) {
                         <TestSprite key={index} index={Math.round(Math.random() * 637)} position={[(state.player.position[0] + index) * spriteSize, (state.player.position[1] + index) * spriteSize]} />
                     )
                 })}
-                <TestSprite ref={(ref)=> setRef(ref)} index={543} position={[state.player.position[0] * spriteSize, state.player.position[1] * spriteSize]} />
+                <TestSprite ref={(ref) => setRef(ref)} index={543} position={[state.player.position[0] * spriteSize, state.player.position[1] * spriteSize]} />
                 <TestSprite index={181} position={[state.enemy.position[0] * spriteSize, state.enemy.position[1] * spriteSize]} />
                 <TestSprite index={245} position={[(state.enemy.position[0] + 1) * spriteSize, (state.enemy.position[1] + 1) * spriteSize]} />
                 <View style={{ flex: 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
@@ -125,26 +126,37 @@ export default function DungeonsOfSpiritmount(props) {
 
 class MapView extends PureComponent {
 
-    constructor(props){
+    constructor(props) {
         super(props)
         this.map = props.map
     }
 
 
-    render(){
-    let myMap = this.props.map.map((square, index)=>{
-        console.log(square.position[0])
-            return(
-                <TestSprite key = {square.key} index ={square.index} position={square.position}/>
-                )  
-        
-    })
+    render() {
 
-    return(
-        <View>
-        {myMap}
-        </View>
-    )
+        let myMap = this.props.map.map((square, index) => {
+            return (
+                <TestSprite key={square.key} index={square.index} position={square.position} />
+            )
+
+        })
+
+        return (
+            <View style={{ width: this.props.width, height: this.props.height, position: 'absolute' }}>
+                <FlatList
+                    data={this.props.map}
+                    renderItem={item => {
+                        console.log(item)
+                        return (
+                            <TestSprite key={item.item.key} index={item.item.index} position={item.item.position} />
+                        )
+                    }}
+                    keyExtractor={item => item.key}
+                    initialNumToRender={195}
+
+                />
+            </View>
+        )
     }
 }
 
